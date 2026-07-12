@@ -44,33 +44,45 @@ Multiplier #(.N(n_bits)) dut(
 .finish(finish),
 .bcd(bcd)
 );
+
+// Clock generation
 initial
 begin
 clk=0;
 forever #5 clk=~clk;
 end
+
 initial
 begin
 reset=0;
 start=0;
 a_in=0;
 b_in=0;
+
 #20;
 reset=1;
+
+// Test Case 1
 a_in=26;
 b_in=30;
-start=0;
 #10;
 start=1;
-wait(finish);
-#20;
+@(posedge finish);
+#10;
 start=0;
+
+// Test Case 2
+#20;
 a_in=13;
 b_in=13;
 #10;
 start=1;
-wait(finish);
+@(posedge finish);
+#10;
+start=0;
+
 #20;
 $finish;
 end
+
 endmodule
